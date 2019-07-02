@@ -72,7 +72,18 @@ namespace BusMonitor
 
             var request = new RestRequest( url , Method.POST );
             request.AddHeader("accessToken", token);
-            request.AddParameter ( "Body" , "{  \"statistics\":\"N\", \"cultureInfo\":\"ES\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"" + DateTime.Now.ToString("yyyyMMDD") + "\"\n}", ParameterType.RequestBody);
+
+            request.RequestFormat = DataFormat.Json;
+            request.AddJsonBody( new { 
+                statistics = "N", 
+                cultureInfo = "ES", 
+                Text_StopRequired_YN="Y", 
+                Text_EstimationsRequired_YN="Y", 
+                Text_IncidencesRequired_YN="Y", 
+                DateTime_Referenced_Incidencies_YYYYMMDD=DateTime.Now.ToString("yyyyMMDD") 
+            }); 
+
+            //request.AddParameter ( "Body" , "{  \"statistics\":\"N\", \"cultureInfo\":\"ES\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"" + DateTime.Now.ToString("yyyyMMDD") + "\"\n}", ParameterType.RequestBody);
 
             IRestResponse response = _client.Execute(request);
             JObject json = JObject.Parse(response.Content);
