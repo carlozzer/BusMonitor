@@ -52,21 +52,38 @@ namespace BusMonitor
 
         void RefreshBuffer() {
 
-            Console.Clear();
+            //Console.Clear();
 
             Console.ForegroundColor = ConsoleColor.DarkGray;
-            
+
+            int prev = 0;
             for ( int i = 0; i < buffer.Length; i++) {
 
-                Console.ForegroundColor = ResolveColor(buffer[i]);
+                int color = buffer[i];
+
+                if ( color != prev ) {
+                    Console.ForegroundColor = ResolveColor(color);
+                }
+
                 Console.Write( pixel );
 
+                prev = color;
             }
         }
 
         public void Clear() {
 
             Array.Clear( buffer , 0 , buffer.Length );
+            RefreshBuffer();
+        }
+
+        void SetPixel(int x, int y, int col) {
+            int offset = ( (y-1) * Console.WindowWidth) + x;
+            buffer[offset] = col;
+        }
+
+        public void DrawPixel(int x, int y, int col) {
+            SetPixel(x, y, col);
             RefreshBuffer();
         }
 

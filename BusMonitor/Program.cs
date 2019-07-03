@@ -12,6 +12,8 @@ namespace BusMonitor
 
             DotMatrix display = new DotMatrix();
             display.Clear();
+            display.DrawPixel(3, 3, 1);
+            display.DrawPixel(5, 10, 2);
 
             Console.ReadKey();
             //do
