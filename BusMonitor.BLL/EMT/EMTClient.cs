@@ -68,7 +68,7 @@ namespace BusMonitor.BLL.EMT
     "nameB": "SENTIDO 2",
     "line": "068"
   },
-  {
+  {new 
     "startDate": "24/06/2019",
     "group": "110",
     "nameA": "SENTIDO 1",
@@ -89,21 +89,39 @@ namespace BusMonitor.BLL.EMT
 
             var request = new RestRequest( url , Method.POST );
             request.AddHeader("accessToken", token);
-            request.AddParameter("undefined", "{\n      \"statistics\":\"N\",\n      \"cultureInfo\":\"EN\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"20190704\"\n}", ParameterType.RequestBody);
+            //request.AddParameter("undefined", "{\n      \"statistics\":\"N\",\n      \"cultureInfo\":\"EN\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"20190704\"\n}", ParameterType.RequestBody);
+
+            request.AddJsonBody(new {
+
+                statistics = "N",
+                cultureInfo = "EN",
+                Text_StopRequired_YN = "Y",
+                Text_EstimationsRequired_YN = "Y",
+                Text_IncidencesRequired_YN = "Y",
+                DateTime_Referenced_Incidencies_YYYYMMDD = "20190704"
+            });
+               
 
             // Seconds to arrive bus (999999 = more than 20 minutes).
 
             IRestResponse response = _client.Execute(request);
             dynamic json = Parse(response.Content);
 
-            foreach ( var arrive in json.data[0].Arrive ) {
-
-                if ( line == (string)arrive.geometry.line)
+            var datos = json.data[0];
+            if ( datos != null && datos.Length > 0 )
+            {
+                foreach (var arrive in datos.Arrive)
                 {
-                    ret = (int)arrive.geometry.estimateArrive;
-                }
 
+                    if (line == (string)arrive.geometry.line)
+                    {
+                        ret = (int)arrive.geometry.estimateArrive;
+                    }
+
+                }
             }
+
+            
 
             return ret;
 
