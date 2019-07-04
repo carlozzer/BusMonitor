@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusMonitor
+namespace BusMonitor.Display
 {
-    public class DotMatrix
+    public class DotMatrix : BusDisplay
     {
         char pixel => '*';
 
@@ -85,6 +85,11 @@ namespace BusMonitor
         public void DrawPixel(int x, int y, int col) {
             SetPixel(x, y, col);
             RefreshBuffer();
+        }
+
+        public void DrawText(int x, int y, int col,string txt)
+        {
+            //TODO
         }
 
     }
