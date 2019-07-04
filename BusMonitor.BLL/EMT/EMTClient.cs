@@ -89,7 +89,7 @@ namespace BusMonitor.BLL.EMT
 
             var request = new RestRequest( url , Method.POST );
             request.AddHeader("accessToken", token);
-            request.AddParameter("undefined", "{\n      \"statistics\":\"N\",\n      \"cultureInfo\":\"EN\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"20190702\"\n}", ParameterType.RequestBody);
+            request.AddParameter("undefined", "{\n      \"statistics\":\"N\",\n      \"cultureInfo\":\"EN\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"20190704\"\n}", ParameterType.RequestBody);
 
             // Seconds to arrive bus (999999 = more than 20 minutes).
 
