@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BusMonitor.Web.Models
 {
-    public class TimeLine
+    public class BusLine
     {
         public string Stop { get; set; }
         public string Bus  { get; set; }

@@ -108,14 +108,18 @@ namespace BusMonitor.BLL.EMT
             dynamic json = Parse(response.Content);
 
             var datos = json.data[0];
-            if ( datos != null && datos.Length > 0 )
-            {
-                foreach (var arrive in datos.Arrive)
-                {
 
-                    if (line == (string)arrive.geometry.line)
-                    {
+            bool go_on = datos != null;
+                 go_on = go_on && ( datos.GetType().IsArray ? datos.Length > 0 : true );
+
+            if ( go_on ) {
+
+                foreach ( var arrive in datos.Arrive ) {
+
+                    if ( line == (string) arrive.geometry.line ) {
+
                         ret = (int)arrive.geometry.estimateArrive;
+
                     }
 
                 }

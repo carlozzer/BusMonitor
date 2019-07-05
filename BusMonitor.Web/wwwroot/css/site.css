@@ -40,14 +40,13 @@ body {
     src:url('/fonts/5by7.regular.ttf') format('truetype') /* Safari, Android, iOS */
 }
 
-.line-head {
+.head-line {
     background-color:#fafafa;
     font-size:48pt;
 }
 
-.line-body {
+.bus-line {
     background-color: #000;
-    
     font-family:LedDotMatrix;
     font-size: 48pt;
 }

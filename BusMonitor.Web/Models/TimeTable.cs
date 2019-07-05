@@ -9,7 +9,7 @@ namespace BusMonitor.Web.Models
     {
         public string Temp { get; set; }
      
-        public List<TimeLine> Lines { get; set; }
+        public List<BusLine> Lines { get; set; }
         public string EMTToken { get; set; }
     }
 }
