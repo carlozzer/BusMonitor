@@ -31,15 +31,15 @@ namespace BusMonitor.Web.Controllers
             ret.Lines = new List<BusLine>();
             content.SafeSplit( Environment.NewLine ).SafeForEach( (line,idx) => {
 
-                // primera linea es head
-                if ( idx > 0 ) {
+                // # es comentario
+                if ( !line.TrimStart().StartsWith("#") ) {
 
                     BusLine bl = new BusLine()
                     {
 
-                        Stop = line.SafeSplit(",").SafeIndexer(0),
-                        Line = line.SafeSplit(",").SafeIndexer(1),
-                        Desc = line.SafeSplit(",").SafeIndexer(2),
+                        Stop = line.SafeSplit("|").SafeIndexer(0),
+                        Line = line.SafeSplit("|").SafeIndexer(1),
+                        Desc = line.SafeSplit("|").SafeIndexer(2),
 
                     };
 

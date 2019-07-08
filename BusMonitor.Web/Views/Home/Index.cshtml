@@ -26,7 +26,7 @@
     <div class="col-lg-2 bus">
         @line.Line
     </div>
-    <div class="col-lg-2 time" data-bus="@line.Stop@line.Line" >
+    <div class="col-lg-2 time" id="ID_@line.Stop@line.Line" >
         @line.Time
     </div>
     <div class="col-lg-6 desc">
@@ -59,7 +59,7 @@
                 console.log( "OK" );
                 console.log( data );
 
-                $(".time[data-bus='2705C2']").text( data );
+                $("#ID_2705C2").text( data );
             };
 
             var doError = function (data) {
