@@ -10,6 +10,7 @@ using System.Net;
 using System.IO;
 using System.Data;
 using BusMonitor.BLL.Extensions;
+using BusMonitor.BLL.AEMET;
 
 namespace BusMonitor.Web.Controllers
 {
@@ -61,9 +62,7 @@ namespace BusMonitor.Web.Controllers
         public IActionResult Index()
         {
             TimeTable model = ReadCSV();
-            //model.Lines = new List<BusLine>();
-            //model.Lines.Add(new BusLine() { Stop="2705",Line="C2",Time="+20min" , Desc= "Isaac Peral, Hospital Clínico dirección Moncloa" });
-
+            
             EMTClient cli = new EMTClient();
             model.EMTToken = cli.Login("carlozzer@gmail.com", "carlo33er@GMAIL.COM");
 
@@ -72,14 +71,23 @@ namespace BusMonitor.Web.Controllers
         }
 
 
-        public IActionResult TimeArrivalBus( string token , string stop , string line )
+        public IActionResult TimeArrivalBus( string token )
         {
-            EMTClient cli = new EMTClient();
-            // "2705", "C2"
-            int seconds = cli.TimeArrivalBus( stop , line , token);
-            string time = $"{(seconds / 60).ToString("00")}:{(seconds % 60).ToString("00")}";
+            TimeTable model = ReadCSV();
 
-            return Content( time );
+            EMTClient   emt = new EMTClient(); // buses
+            AEMETClient met = new AEMETClient(); // weather
+
+            model.Lines.SafeForEach( line => {
+
+                int seconds = emt.TimeArrivalBus( line.Stop , line.Line , token);
+                line.Time = $"{(seconds / 60).ToString("00")}:{(seconds % 60).ToString("00")}";
+
+            });
+
+            model.Temp = met.ReadTemp().ToString();
+            
+            return Json( model );
         }
 
 

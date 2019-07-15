@@ -63,20 +63,7 @@ namespace BusMonitor.BLL.EMT
 
             IRestResponse response = _client.Execute(request);
             dynamic json = Parse(response.Content);
-            /*
-            "label": "C1",
-    "nameB": "SENTIDO 2",
-    "line": "068"
-  },
-  {new 
-    "startDate": "24/06/2019",
-    "group": "110",
-    "nameA": "SENTIDO 1",
-    "endDate": "31/12/2999",
-    "label": "C2",
-    "nameB": "SENTIDO 2",
-    "line": "069"
-    */
+            
             return ret;
 
         }
@@ -89,8 +76,7 @@ namespace BusMonitor.BLL.EMT
 
             var request = new RestRequest( url , Method.POST );
             request.AddHeader("accessToken", token);
-            //request.AddParameter("undefined", "{\n      \"statistics\":\"N\",\n      \"cultureInfo\":\"EN\",\n      \"Text_StopRequired_YN\":\"Y\",\n      \"Text_EstimationsRequired_YN\":\"Y\",\n      \"Text_IncidencesRequired_YN\":\"Y\",\n      \"DateTime_Referenced_Incidencies_YYYYMMDD\":\"20190704\"\n}", ParameterType.RequestBody);
-
+            
             request.AddJsonBody(new {
 
                 statistics = "N",
@@ -98,7 +84,8 @@ namespace BusMonitor.BLL.EMT
                 Text_StopRequired_YN = "Y",
                 Text_EstimationsRequired_YN = "Y",
                 Text_IncidencesRequired_YN = "Y",
-                DateTime_Referenced_Incidencies_YYYYMMDD = "20190704"
+                DateTime_Referenced_Incidencies_YYYYMMDD = DateTime.Now.ToString("yyyyMMdd")
+                
             });
                
 

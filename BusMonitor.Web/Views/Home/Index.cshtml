@@ -11,8 +11,8 @@
     <div class="col-lg-2">
         TIME
     </div>
-    <div class="col-lg-6">
-        
+    <div class="col-lg-5 text-right">
+        <span id="temp">@Model.Temp</span><span>º</span>
     </div>
 </div>
 
@@ -42,11 +42,8 @@
 
         var RetrieveTime = function () {
 
-                //request.AddHeader("accessToken", token);
-                //request.AddParameter("undefined", "{\\"  \"\":\"Y\",\n      \"\":\"\"\n}", ParameterType.RequestBody);
-
                 jQuery.ajax({
-                    url: "/Home/TimeArrivalBus?token=@Model.EMTToken&stop=2705&line=C2",
+                    url: "/Home/TimeArrivalBus?token=@Model.EMTToken",
                     type: "GET",
                     success: doSuccess,
                     error: doError
@@ -56,13 +53,23 @@
 
             var doSuccess = function (data) {
 
-                console.log( "OK" );
-                console.log( data );
+                //console.log( "OK" );
+                //console.log( data );
 
-                $("#ID_2705C2").text( data );
+                $.each(data.lines, function (idx, item) {
+
+                    var id = "#ID_" + item.stop + "" + item.line;
+                    $( id ).text( item.time );
+
+
+                });
+
+                $("#temp").text( data.temp );
+
+                
             };
 
-            var doError = function (data) {
+            var doError = function ( data ) {
 
                 console.log('ERROR');
             };
@@ -70,7 +77,7 @@
 
         $(function () {
 
-            setInterval ( RetrieveTime, 5000 );
+            setInterval ( RetrieveTime, 10 * 1000 ); // 10 segundos
 
         });
 
