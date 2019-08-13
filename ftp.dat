@@ -1,0 +1,12 @@
+open 137.117.166.94
+carlozzer
+HongKong@2009
+cd bus
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.BLL.dll
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.BLL.pdb
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.deps.json
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.dll
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.pdb
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\BusMonitor.runtimeconfig.json
+put C:\sources\BusMonitor\BusMonitor\bin\Release\netcoreapp2.1\publish\RestSharp.dll
+bye

@@ -70,6 +70,8 @@ namespace BusMonitor.BLL.EMT
 
         public int TimeArrivalBus ( string stop , string line , string token ) {
 
+            Console.Out.WriteLine( $"TimeArrivalBus stop:{stop} line:{line}" );
+
             int ret = 999999;
 
             string url = $"https://openapi.emtmadrid.es/v1/transport/busemtmad/stops/{stop}/arrives/all/";
@@ -94,6 +96,8 @@ namespace BusMonitor.BLL.EMT
             IRestResponse response = _client.Execute(request);
             dynamic json = Parse(response.Content);
 
+            Console.Out.WriteLine( response.Content );
+
             var datos = json.data[0];
 
             bool go_on = datos != null;
@@ -111,8 +115,6 @@ namespace BusMonitor.BLL.EMT
 
                 }
             }
-
-            
 
             return ret;
 

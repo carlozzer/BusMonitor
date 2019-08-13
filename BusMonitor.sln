@@ -9,7 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusMonitor.BLL", "BusMonito
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusMonitor.Web", "BusMonitor.Web\BusMonitor.Web.csproj", "{AB99F4D6-D682-4750-A311-A90E0922BADE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusMonitor.UT", "BusMonitor.UT\BusMonitor.UT.csproj", "{243773A1-1E68-4A72-98D9-25EC66EE0F8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusMonitor.UT", "BusMonitor.UT\BusMonitor.UT.csproj", "{243773A1-1E68-4A72-98D9-25EC66EE0F8A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FAAE7880-D639-4A5C-9136-FD3B757FE9FD}"
+	ProjectSection(SolutionItems) = preProject
+		deploy.ps1 = deploy.ps1
+		ftp.dat = ftp.dat
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
