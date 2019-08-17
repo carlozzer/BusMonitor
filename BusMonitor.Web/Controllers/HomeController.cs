@@ -24,7 +24,12 @@ namespace BusMonitor.Web.Controllers
             TimeTable ret = new TimeTable();
 
             WebClient client = new WebClient();
-            string url = $"{this.Request.Scheme}://{this.Request.Host.Value}/csv/buses.csv";
+
+            //string url = $"{this.Request.Scheme}://{this.Request.Host.Value}/csv/buses.csv";
+            string url = "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv";
+
+            Console.Out.WriteLine( $">>>URL: {url}");
+
             Stream stream = client.OpenRead( url );
             StreamReader reader = new StreamReader(stream);
             String content = reader.ReadToEnd();
@@ -80,7 +85,11 @@ namespace BusMonitor.Web.Controllers
 
             model.Lines.SafeForEach( line => {
 
+                Console.Out.WriteLine( $"call TimeArrivalBus ( {line.Stop} , {line.Line} , {token} );" );
                 int seconds = emt.TimeArrivalBus( line.Stop , line.Line , token);
+                Console.Out.WriteLine( $"returns {seconds} seconds" );
+
+
                 line.Time = $"{(seconds / 60).ToString("00")}:{(seconds % 60).ToString("00")}";
 
             });

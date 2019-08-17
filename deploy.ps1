@@ -1,9 +1,14 @@
-dotnet publish BusMonitor.Web/BusMonitor.Web.csproj --configuration Release
+param([switch]$debug)
+
+$conf = "Release"
+if ($debug) { $conf = "Debug"}
+
+dotnet publish BusMonitor.Web/BusMonitor.Web.csproj --configuration $conf
 
 #ftp mput es arcaico y no permite copiar directorios recursivamente
 # probamos scp ( ssh copy )
 #ftp -s:ftp.dat
-scp -rp BusMonitor.Web\bin\Release\netcoreapp2.1\publish\* carlozzer@busmon.westeurope.cloudapp.azure.com:~/bus
+scp -rp "BusMonitor.Web\bin\${conf}\netcoreapp2.1\publish\*" carlozzer@busmon.westeurope.cloudapp.azure.com:~/bus
 
 #hemos generado un key-ge para acceder con ssh sin password
 #desde powershell ( si no es admin se cuelga )

@@ -70,8 +70,6 @@ namespace BusMonitor.BLL.EMT
 
         public int TimeArrivalBus ( string stop , string line , string token ) {
 
-            Console.Out.WriteLine( $"TimeArrivalBus stop:{stop} line:{line}" );
-
             int ret = 999999;
 
             string url = $"https://openapi.emtmadrid.es/v1/transport/busemtmad/stops/{stop}/arrives/all/";
@@ -107,7 +105,9 @@ namespace BusMonitor.BLL.EMT
 
                 foreach ( var arrive in datos.Arrive ) {
 
-                    if ( line == (string) arrive.geometry.line ) {
+                    Console.Out.WriteLine( $"Checking line {arrive.line}" );
+
+                    if ( line == (string) arrive.line ) {
 
                         ret = (int)arrive.geometry.estimateArrive;
 
