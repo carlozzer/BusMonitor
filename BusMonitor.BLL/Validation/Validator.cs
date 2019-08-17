@@ -40,7 +40,7 @@ namespace BusMonitor.BLL.Validation
                     }
                     ret = converted != null;
                 }
-                catch (Exception ex)
+                catch //(Exception ex)
                 {
                     //ExceptionHelper.Manage(ex);
                     ret = false;

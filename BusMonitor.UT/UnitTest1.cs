@@ -1,5 +1,5 @@
-using BusMonitor.BLL.AEMET;
-using BusMonitor.BLL.EMT;
+using BusMonitor.BLL.Clients;
+using BusMonitor.BLL.Tables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BusMonitor.UT
@@ -25,11 +25,11 @@ namespace BusMonitor.UT
         public void ReadBusLine()
         {
             // ARRAnge
-            EMTClient emt = new EMTClient();
+            TimeTable model = TablesBLL.ModelWithToken( "navas" );
+            
 
             // Act
-            string token = emt.Login("carlozzer@gmail.com", "carlo33er@GMAIL.COM");
-            //emt.TimeArrivalBus()
+            model = TablesBLL.ArrivalTimes( "navas" , model.EMTToken );//emt.TimeArrivalBus()
 
             // assert
             Assert.IsTrue(false);

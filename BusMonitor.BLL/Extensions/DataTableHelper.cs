@@ -27,7 +27,7 @@ namespace BusMonitor.BLL.Extensions
                     ret = dv.ToTable();
                 }
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 //ex.Message
                 //ExceptionHelper.Manage(ex);

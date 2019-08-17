@@ -5,12 +5,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BusMonitor.Web.Models;
-using BusMonitor.BLL.EMT;
 using System.Net;
 using System.IO;
 using System.Data;
 using BusMonitor.BLL.Extensions;
-using BusMonitor.BLL.AEMET;
 
 namespace BusMonitor.Web.Controllers
 {

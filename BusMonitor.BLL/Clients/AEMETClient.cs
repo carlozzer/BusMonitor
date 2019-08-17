@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusMonitor.BLL.AEMET
+namespace BusMonitor.BLL.Clients
 {
     public class AEMETClient
     {

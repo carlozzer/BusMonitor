@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace BusMonitor.BLL.EMT
+namespace BusMonitor.BLL.Clients
 {
     public class EMTClient
     {
@@ -109,6 +109,7 @@ namespace BusMonitor.BLL.EMT
 
             if ( go_on ) {
 
+                // No está recorriendo todas las líneas que hay en datos
                 foreach ( var arrive in datos.Arrive ) {
 
                     Console.Out.WriteLine( $"Checking line {arrive.line}" );
