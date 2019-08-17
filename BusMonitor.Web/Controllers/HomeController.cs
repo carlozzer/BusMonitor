@@ -16,89 +16,18 @@ namespace BusMonitor.Web.Controllers
 {
     public class HomeController : Controller
     {
-        #region CSV
-
-
-        TimeTable ReadCSV() {
-
-            TimeTable ret = new TimeTable();
-
-            WebClient client = new WebClient();
-
-            //string url = $"{this.Request.Scheme}://{this.Request.Host.Value}/csv/buses.csv";
-            string url = "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv";
-
-            Console.Out.WriteLine( $">>>URL: {url}");
-
-            Stream stream = client.OpenRead( url );
-            StreamReader reader = new StreamReader(stream);
-            String content = reader.ReadToEnd();
-
-            ret.Lines = new List<BusLine>();
-            content.SafeSplit( Environment.NewLine ).SafeForEach( (line,idx) => {
-
-                // # es comentario
-                if ( !line.TrimStart().StartsWith("#") ) {
-
-                    BusLine bl = new BusLine()
-                    {
-
-                        Stop = line.SafeSplit("|").SafeIndexer(0),
-                        Line = line.SafeSplit("|").SafeIndexer(1),
-                        Desc = line.SafeSplit("|").SafeIndexer(2),
-
-                    };
-
-                    ret.Lines.Add ( bl );
-                }
-                
-
-            });
-
-            //var fileContents = System.IO.File.ReadAllText( .MapPath(@"~/csv/buses.csv"));
-
-            return ret;
-
-        }
-
-        #endregion
-
-
-        public IActionResult Index()
+        
+        [HttpGet]
+        [Produces("text/html")]
+        public IActionResult Index( )
         {
-            TimeTable model = ReadCSV();
-            
-            EMTClient cli = new EMTClient();
-            model.EMTToken = cli.Login("carlozzer@gmail.com", "carlo33er@GMAIL.COM");
-
-
-            return View( model );
+            //TimeTable model = ModelWithToken( string.Empty );
+            //return View( model );
+            return Content("cat is mandatory");
         }
 
-
-        public IActionResult TimeArrivalBus( string token )
-        {
-            TimeTable model = ReadCSV();
-
-            EMTClient   emt = new EMTClient(); // buses
-            AEMETClient met = new AEMETClient(); // weather
-
-            model.Lines.SafeForEach( line => {
-
-                Console.Out.WriteLine( $"call TimeArrivalBus ( {line.Stop} , {line.Line} , {token} );" );
-                int seconds = emt.TimeArrivalBus( line.Stop , line.Line , token);
-                Console.Out.WriteLine( $"returns {seconds} seconds" );
-
-
-                line.Time = $"{(seconds / 60).ToString("00")}:{(seconds % 60).ToString("00")}";
-
-            });
-
-            model.Temp = met.ReadTemp().ToString();
-            
-            return Json( model );
-        }
-
+        
+        
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -68,9 +68,9 @@ namespace BusMonitor.BLL.EMT
 
         }
 
-        public int TimeArrivalBus ( string stop , string line , string token ) {
+        #region TIME ARRIVAL
 
-            int ret = 999999;
+        IRestResponse BusStopRequest ( string stop , string token ) {
 
             string url = $"https://openapi.emtmadrid.es/v1/transport/busemtmad/stops/{stop}/arrives/all/";
 
@@ -87,12 +87,18 @@ namespace BusMonitor.BLL.EMT
                 DateTime_Referenced_Incidencies_YYYYMMDD = DateTime.Now.ToString("yyyyMMdd")
                 
             });
-               
+            
+            IRestResponse response = _client.Execute(request);
+            return response;
+        }
+
+        public int TimeArrivalBus ( string stop , string line , string token ) {
 
             // Seconds to arrive bus (999999 = more than 20 minutes).
+            int ret = 999999;
 
-            IRestResponse response = _client.Execute(request);
-            dynamic json = Parse(response.Content);
+            IRestResponse response = BusStopRequest ( stop , token );
+            dynamic json = Parse ( response.Content );
 
             Console.Out.WriteLine( response.Content );
 
@@ -120,6 +126,43 @@ namespace BusMonitor.BLL.EMT
 
         }
 
+        public Dictionary<string,int> TimeArrivalBus ( string stop , string[] lines , string token ) {
+
+            Dictionary<string,int> ret = new Dictionary<string, int>();
+
+            IRestResponse response = BusStopRequest ( stop , token );
+            dynamic json = Parse(response.Content);
+
+            Console.Out.WriteLine( response.Content );
+
+            var datos = json.data[0];
+
+            bool go_on = datos != null;
+                 go_on = go_on && ( datos.GetType().IsArray ? datos.Length > 0 : true );
+
+            if ( go_on ) {
+
+                foreach ( var arrive in datos.Arrive ) {
+
+                    string current_line = (string) arrive.line;
+                    bool match_line = Array.IndexOf( lines , current_line ) > -1; 
+                    if ( match_line  ) {
+
+                        ret.Add( current_line , (int) arrive.geometry.estimateArrive );
+
+                    }
+
+                }
+            }
+
+            return ret;
+
+        }
+
+        #endregion
+
+
+        
 
     }
 }

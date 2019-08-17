@@ -43,7 +43,7 @@
         var RetrieveTime = function () {
 
                 jQuery.ajax({
-                    url: "/Home/TimeArrivalBus?token=@Model.EMTToken",
+                    url: "/Home/Arrival/?cat=@Model.Category&tok=@Model.EMTToken",
                     type: "GET",
                     success: doSuccess,
                     error: doError

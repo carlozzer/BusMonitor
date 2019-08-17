@@ -1,0 +1,95 @@
+﻿
+@model BusMonitor.Web.Models.TimeTable;
+
+
+<div class="row head-line">
+    <div class="col-lg-2">
+        STOP
+    </div>
+    <div class="col-lg-2">
+        BUS
+    </div>
+    <div class="col-lg-2">
+        TIME
+    </div>
+    <div class="col-lg-5 text-right">
+        <span id="temp">@Model.Temp</span><span>º</span>
+    </div>
+</div>
+
+
+@foreach (var line in Model.Lines)
+{
+    <div class="row bus-line">
+        <div class="col-lg-2 stop">
+            @line.Stop
+        </div>
+        <div class="col-lg-2 bus">
+            @line.Line
+        </div>
+        <div class="col-lg-2 time" id="ID_@line.Stop@line.Line">
+            @line.Time
+        </div>
+        <div class="col-lg-6 desc">
+            <marquee behavior="scroll" direction="left">@line.Desc</marquee>
+        </div>
+    </div>
+}
+
+@section Scripts {
+
+
+    <script>
+
+        var RetrieveTime = function () {
+
+            jQuery.ajax({
+
+                url    : "/api/arrival/cat/@Model.Category/token/@Model.EMTToken",
+                type   : "GET",
+                success: doSuccess,
+                error  : doError
+            });
+
+        };
+
+        var doSuccess = function (data) {
+
+            //console.log( "OK" );
+            //console.log( data );
+
+            $.each(data.lines, function (idx, item) {
+
+                var id = "#ID_" + item.stop + "" + item.line;
+                $( id ).text( item.time );
+
+
+            });
+
+            $("#temp").text( data.temp );
+
+
+        };
+
+        var doError = function ( data ) {
+
+            console.log('ERROR');
+        };
+
+
+        $(function () {
+
+            setInterval ( RetrieveTime, 20 * 1000 ); // 10 segundos
+
+        });
+
+
+    </script>
+
+}
+
+
+
+
+
+
