@@ -69,6 +69,8 @@ namespace BusMonitor.BLL.Tables
         public static TimeTable ArrivalTimes( string category , string token ) {
 
             TimeTable model = ReadCSV( category );
+            model.EMTToken = token;
+            model.Category = category;
 
             EMTClient   emt = new EMTClient(); // buses
             AEMETClient met = new AEMETClient(); // weather

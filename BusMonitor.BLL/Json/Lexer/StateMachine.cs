@@ -24,7 +24,7 @@ namespace BusMonitor.BLL.Json
 /*  CR   1*/{ ERR , ERR, ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR },
 /*   "   2*/{ 102 , ERR, 102 , 102 , 102 ,  0  , 102 , 102 , 102 , 102 , 102 , 102 , 102 , 102 , 102 },
 /*   '   3*/{ 103 , ERR, 103 , 103 , 103 , 103 ,  0  , 103 , 103 , 103 , 103 , 103 , 103 , 103 , 103 },
-/*  NUM  4*/{ -1  , -1 , ERR , ERR , -1  , ERR , ERR , ERR , ERR , -1  , 104 , ERR , 104 , ERR , ERR },
+/*  NUM  4*/{ -1  , -1 , ERR , ERR , -1  , ERR , ERR , ERR , -1  , -1  , 104 , ERR , 104 , ERR , ERR },
 /*  NUM  5*/{ ERR , ERR, ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , ERR , 106 , ERR , ERR },
 /*  NUM  6*/{ -1  , -1 , ERR , ERR , -1  , ERR , ERR , ERR , ERR , -1  , ERR , ERR , 106 , ERR , ERR },
 /* ALPHA  */{ -1  , -1 , ERR , ERR , -1  , ERR , ERR , ERR , -1  , -1  , ERR , ERR , ERR , 107 , ERR },

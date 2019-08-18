@@ -149,7 +149,12 @@ namespace BusMonitor.BLL.Clients
                     bool match_line = Array.IndexOf( lines , current_line ) > -1; 
                     if ( match_line  ) {
 
-                        ret.Add( current_line , (int) arrive.geometry.estimateArrive );
+                        int secs = (int) arrive.estimateArrive;
+
+                        if ( secs != 999999 ) {
+
+                            ret.Add( current_line , secs );
+                        }
 
                     }
 
