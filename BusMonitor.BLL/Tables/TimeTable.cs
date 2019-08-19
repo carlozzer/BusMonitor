@@ -36,7 +36,6 @@ namespace BusMonitor.BLL.Tables
             }
         }
 
-
         public string[] LinesByStop( string stop ) {
 
             List<string> ret = new List<string>();
@@ -48,6 +47,22 @@ namespace BusMonitor.BLL.Tables
 
             return ret.ToArray();
         }
+
+        public void UpdateTimes( List<BusLine> times ) {
+
+            if ( this.Lines.SafeCount() > 0 ) {
+
+                times.SafeForEach( time => {
+
+                    BusLine line = this.Lines.Where( l => l.Stop == time.Stop && l.Line == time.Line ).FirstOrDefault();
+                    line.Seconds = time.Seconds;
+
+                });
+
+            }
+
+        }
+
 
     }
 

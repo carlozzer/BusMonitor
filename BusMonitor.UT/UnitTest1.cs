@@ -87,8 +87,11 @@ namespace BusMonitor.UT
             tt.Stops.SafeForEach( stop => {
 
                 string[] lines = tt.LinesByStop( stop );
-                List<BusLine> times = emt.TimeArrivalBus( stop , lines , tt.EMTToken );
+                //List<BusLine> times = emt.TimeArrivalBus( stop , lines , tt.EMTToken );
+                List<BusLine> times = new List<BusLine>() { new BusLine() { Stop="878",Line="39",Seconds=608 } };
+                tt.UpdateTimes( times );
 
+                int x = 0;
 
 
             });
@@ -97,6 +100,7 @@ namespace BusMonitor.UT
             //cli.TimeArrivalBus(  )
 
             // Assert
+            Assert.AreEqual( tt.Lines[2].Seconds , 608 );
 
 
         }

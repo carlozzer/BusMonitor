@@ -13,37 +13,6 @@ namespace BusMonitor.BLL.Tables
     {
         #region ARRIVAL TIME
 
-        
-        static TimeTable UpdateTable( TimeTable source , Dictionary<string,int> times ) {
-
-            TimeTable ret = new TimeTable();
-
-            if ( source != null ) {
-
-                ret.Category = source.Category;
-                ret.EMTToken = source.EMTToken;
-                ret.Lines    = new List<BusLine>();
-                ret.Temp     = source.Temp;
-                
-                source.Lines.SafeForEach( source_item => {
-
-                    if ( times.ContainsKey( source_item.Line ) ) {
-
-                        // updates
-                        //source_item.Time = RenderEstimatedTime( times[source_item.Line] );
-                        ret.Lines.Add ( source_item );
-
-                    } else {
-
-                        ret.Lines.Add( source_item );
-                    }
-
-                });
-            }
-
-            return ret;
-        }
-
         public static TimeTable ArrivalTimes( string category , string token ) {
 
             TimeTable model = ReadCSV( category );
@@ -53,14 +22,12 @@ namespace BusMonitor.BLL.Tables
             EMTClient   emt = new EMTClient(); // buses
             AEMETClient met = new AEMETClient(); // weather
 
-            IEnumerable<IGrouping<string,BusLine>> stops = model.Lines.GroupBy<BusLine,string>( b => b.Stop );
+            model.Stops.SafeForEach( stop => {
 
-            stops.SafeForEach( stop => {
+                string[] lines = model.LinesByStop( stop );
+                List<BusLine> times = emt.TimeArrivalBus( stop , lines , model.EMTToken );
+                model.UpdateTimes ( times );
 
-                //string[] lines = stop.ToList().Select( s => s.Line ).ToArray();
-                //Dictionary<string,int> times = emt.TimeArrivalBus( stop.Key , lines , token);
-                //model = UpdateTable( model , times );
-                
             });
 
             model.Temp = met.ReadTemp().ToString();

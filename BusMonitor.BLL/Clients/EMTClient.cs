@@ -93,41 +93,6 @@ namespace BusMonitor.BLL.Clients
             return response;
         }
 
-        //public int TimeArrivalBus ( string stop , string line , string token ) {
-
-        //    // Seconds to arrive bus (999999 = more than 20 minutes).
-        //    int ret = 999999;
-
-        //    IRestResponse response = BusStopRequest ( stop , token );
-        //    dynamic json = Parse ( response.Content );
-
-        //    Console.Out.WriteLine( response.Content );
-
-        //    var datos = json.data[0];
-
-        //    bool go_on = datos != null;
-        //         go_on = go_on && ( datos.GetType().IsArray ? datos.Length > 0 : true );
-
-        //    if ( go_on ) {
-
-        //        // No está recorriendo todas las líneas que hay en datos
-        //        foreach ( var arrive in datos.Arrive ) {
-
-        //            Console.Out.WriteLine( $"Checking line {arrive.line}" );
-
-        //            if ( line == (string) arrive.line ) {
-
-        //                ret = (int)arrive.geometry.estimateArrive;
-
-        //            }
-
-        //        }
-        //    }
-
-        //    return ret;
-
-        //}
-
         public List<BusMonitor.BLL.Tables.BusLine> TimeArrivalBus ( string stop , string[] lines , string token ) {
 
             List<BusLine> ret = new List<BusLine>();
