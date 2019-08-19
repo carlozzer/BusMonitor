@@ -1,4 +1,5 @@
 ﻿using BusMonitor.BLL.Json;
+using BusMonitor.BLL.Tables;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -70,7 +71,7 @@ namespace BusMonitor.BLL.Clients
 
         #region TIME ARRIVAL
 
-        IRestResponse BusStopRequest ( string stop , string token ) {
+        public IRestResponse BusStopRequest ( string stop , string token ) {
 
             string url = $"https://openapi.emtmadrid.es/v1/transport/busemtmad/stops/{stop}/arrives/all/";
 
@@ -92,44 +93,44 @@ namespace BusMonitor.BLL.Clients
             return response;
         }
 
-        public int TimeArrivalBus ( string stop , string line , string token ) {
+        //public int TimeArrivalBus ( string stop , string line , string token ) {
 
-            // Seconds to arrive bus (999999 = more than 20 minutes).
-            int ret = 999999;
+        //    // Seconds to arrive bus (999999 = more than 20 minutes).
+        //    int ret = 999999;
 
-            IRestResponse response = BusStopRequest ( stop , token );
-            dynamic json = Parse ( response.Content );
+        //    IRestResponse response = BusStopRequest ( stop , token );
+        //    dynamic json = Parse ( response.Content );
 
-            Console.Out.WriteLine( response.Content );
+        //    Console.Out.WriteLine( response.Content );
 
-            var datos = json.data[0];
+        //    var datos = json.data[0];
 
-            bool go_on = datos != null;
-                 go_on = go_on && ( datos.GetType().IsArray ? datos.Length > 0 : true );
+        //    bool go_on = datos != null;
+        //         go_on = go_on && ( datos.GetType().IsArray ? datos.Length > 0 : true );
 
-            if ( go_on ) {
+        //    if ( go_on ) {
 
-                // No está recorriendo todas las líneas que hay en datos
-                foreach ( var arrive in datos.Arrive ) {
+        //        // No está recorriendo todas las líneas que hay en datos
+        //        foreach ( var arrive in datos.Arrive ) {
 
-                    Console.Out.WriteLine( $"Checking line {arrive.line}" );
+        //            Console.Out.WriteLine( $"Checking line {arrive.line}" );
 
-                    if ( line == (string) arrive.line ) {
+        //            if ( line == (string) arrive.line ) {
 
-                        ret = (int)arrive.geometry.estimateArrive;
+        //                ret = (int)arrive.geometry.estimateArrive;
 
-                    }
+        //            }
 
-                }
-            }
+        //        }
+        //    }
 
-            return ret;
+        //    return ret;
 
-        }
+        //}
 
-        public Dictionary<string,int> TimeArrivalBus ( string stop , string[] lines , string token ) {
+        public List<BusMonitor.BLL.Tables.BusLine> TimeArrivalBus ( string stop , string[] lines , string token ) {
 
-            Dictionary<string,int> ret = new Dictionary<string, int>();
+            List<BusLine> ret = new List<BusLine>();
 
             IRestResponse response = BusStopRequest ( stop , token );
             dynamic json = Parse(response.Content);
@@ -153,7 +154,12 @@ namespace BusMonitor.BLL.Clients
 
                         if ( secs != 999999 ) {
 
-                            ret.Add( current_line , secs );
+                            BusLine new_line = new BusLine();
+                            new_line.Stop = stop;
+                            new_line.Line = current_line;
+                            new_line.Seconds = secs;
+
+                            ret.Add( new_line );
                         }
 
                     }
@@ -167,8 +173,6 @@ namespace BusMonitor.BLL.Clients
 
         #endregion
 
-
-        
 
     }
 }

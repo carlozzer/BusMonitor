@@ -14,6 +14,41 @@ namespace BusMonitor.BLL.Tables
         public string           EMTToken    { get; set; }
         public string           Category    { get; set; }
 
+        public List<string> Stops {
+
+            get {
+
+                List<string> ret = new List<string>();
+
+                if ( this.Lines.SafeCount() > 0 ) {
+
+                    IEnumerable<IGrouping<string,BusLine>> groups = this.Lines.GroupBy<BusLine,string>( b => b.Stop );
+
+                    groups.SafeForEach( group => {
+
+                        ret.Add( group.Key );
+
+                    });
+
+                }
+
+                return ret;
+            }
+        }
+
+
+        public string[] LinesByStop( string stop ) {
+
+            List<string> ret = new List<string>();
+
+            if ( this.Lines.SafeCount() > 0 ) {
+
+                ret = this.Lines.Where( l => l.Stop == stop ).Select<BusLine,string>( b => b.Line ).ToList();
+            }
+
+            return ret.ToArray();
+        }
+
     }
 
 

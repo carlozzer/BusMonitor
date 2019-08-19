@@ -13,29 +13,7 @@ namespace BusMonitor.BLL.Tables
     {
         #region ARRIVAL TIME
 
-        static string RenderEstimatedTime( int seconds ) {
-
-            string ret = string.Empty;
-
-            if ( seconds != 0 ) {
-
-                if ( seconds != 999999 ) {
-
-                    ret = $"{(seconds / 60).ToString("00")}:{(seconds % 60).ToString("00")}";
-
-                } else {
-
-                    ret = "+20:00";
-                }
-
-            } else {
-
-                ret = "---";
-            }
-
-            return ret;
-        }
-
+        
         static TimeTable UpdateTable( TimeTable source , Dictionary<string,int> times ) {
 
             TimeTable ret = new TimeTable();
@@ -52,7 +30,7 @@ namespace BusMonitor.BLL.Tables
                     if ( times.ContainsKey( source_item.Line ) ) {
 
                         // updates
-                        source_item.Time = RenderEstimatedTime( times[source_item.Line] );
+                        //source_item.Time = RenderEstimatedTime( times[source_item.Line] );
                         ret.Lines.Add ( source_item );
 
                     } else {
@@ -79,9 +57,9 @@ namespace BusMonitor.BLL.Tables
 
             stops.SafeForEach( stop => {
 
-                string[] lines = stop.ToList().Select( s => s.Line ).ToArray();
-                Dictionary<string,int> times = emt.TimeArrivalBus( stop.Key , lines , token);
-                model = UpdateTable( model , times );
+                //string[] lines = stop.ToList().Select( s => s.Line ).ToArray();
+                //Dictionary<string,int> times = emt.TimeArrivalBus( stop.Key , lines , token);
+                //model = UpdateTable( model , times );
                 
             });
 

@@ -1,7 +1,9 @@
 using BusMonitor.BLL.Clients;
+using BusMonitor.BLL.Extensions;
 using BusMonitor.BLL.Json;
 using BusMonitor.BLL.Tables;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 using System.Text;
 
 namespace BusMonitor.UT
@@ -64,6 +66,35 @@ namespace BusMonitor.UT
 
             // act
             dynamic json = Parse(jsonstr);
+
+            // Assert
+
+
+        }
+
+
+
+        [TestMethod]
+        public void UpdateTimes () {
+
+            // Arrange
+            string    navas = "navas";
+            TimeTable tt    = TablesBLL.ModelWithToken( navas );
+            EMTClient emt   = new EMTClient(); // buses
+
+            // act
+            
+            tt.Stops.SafeForEach( stop => {
+
+                string[] lines = tt.LinesByStop( stop );
+                List<BusLine> times = emt.TimeArrivalBus( stop , lines , tt.EMTToken );
+
+
+
+            });
+
+            //EMTClient cli = new EMTClient();
+            //cli.TimeArrivalBus(  )
 
             // Assert
 
