@@ -2,39 +2,35 @@
 @model BusMonitor.BLL.Tables.TimeTable;
 
 
-<div class="row head-line">
-    <div class="col-lg-2">
-        STOP
-    </div>
-    <div class="col-lg-2">
-        BUS
-    </div>
-    <div class="col-lg-2">
-        TIME
-    </div>
-    <div class="col-lg-5 text-right">
-        <span id="temp">@Model.Temp</span><span>º</span>
-    </div>
-</div>
+<table class="table table-dark">
+    <thead>
+        <tr class="head-line">
+            <th scope="col">STOP</th>
+            <th scope="col">BUS</th>
+            <th scope="col">TIME</th>
+            <th scope="col" class="text-right">
+                <span id="temp">@Model.Temp</span><span>º</span>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
 
+        @foreach (var line in Model.Lines)
+        {
+            <tr class="bus-line">
+                <td class="stop">@line.Stop</td>
+                <td class="bus">@line.Line</td>
+                <td class="time" id="ID_@line.Stop@line.Line">
+                    @line.Time
+                </td>
+                <td class="desc">
+                    <marquee behavior="scroll" direction="left">@line.Desc</marquee>
+                </td>
+            </tr>
+        }
 
-@foreach (var line in Model.Lines)
-{
-    <div class="row bus-line">
-        <div class="col-lg-2 stop">
-            @line.Stop
-        </div>
-        <div class="col-lg-2 bus">
-            @line.Line
-        </div>
-        <div class="col-lg-2 time" id="ID_@line.Stop@line.Line">
-            @line.Time
-        </div>
-        <div class="col-lg-6 desc">
-            <marquee behavior="scroll" direction="left">@line.Desc</marquee>
-        </div>
-    </div>
-}
+    </tbody>
+</table>
 
 @section Scripts {
 
