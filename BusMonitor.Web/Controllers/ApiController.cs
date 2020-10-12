@@ -15,11 +15,11 @@ namespace BusMonitor.Web.Controllers
     public class ApiController : ControllerBase
     {
         [HttpGet]
-        [Route("api/arrival/cat/{category}/token/{token}")]
-        public TimeTable Arrival ( string category , string token )
+        [Route("api/arrival/cat/{category}/token/{token}/{time}")]
+        public TimeTable Arrival ( string category , string token , string time )
         {
             Console.Out.WriteLine("=====================");
-            Console.Out.WriteLine( $"START TimeArrivalBus ( {category} , {token} )");
+            Console.Out.WriteLine( $"START TimeArrivalBus ( {category} , {token} , {time} )");
             Console.Out.WriteLine("=====================");
 
             TimeTable model = TablesBLL.ArrivalTimes( category , token );

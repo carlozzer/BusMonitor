@@ -68,7 +68,7 @@ namespace BusMonitor.BLL.Tables
 
                             Stop = line.SafeSplit("|").SafeIndexer(1),
                             Line = line.SafeSplit("|").SafeIndexer(2),
-                            Desc = line.SafeSplit("|").SafeIndexer(3)
+                            Desc = line.SafeSplit("|").SafeIndexer(3).RemoveDiacritics()
 
                         };
 

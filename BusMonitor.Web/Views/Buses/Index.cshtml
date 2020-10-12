@@ -2,14 +2,15 @@
 @model BusMonitor.BLL.Tables.TimeTable;
 
 
-<table class="table table-dark">
+<table class="time-table">
     <thead>
         <tr class="head-line">
-            <th scope="col">STOP</th>
-            <th scope="col">BUS</th>
-            <th scope="col">TIME</th>
+            <th scope="col" class="cell-stop">stop</th>
+            <th scope="col" class="cell-bus">bus</th>
+            <th scope="col">time</th>
             <th scope="col" class="text-right">
-                <span id="temp">@Model.Temp</span><span>º</span>
+                <span id="refresh-hour">@DateTime.Now.ToString("HH:mm")</span>
+                <span id="refresh-temp">@Model.Temp</span><span>C </span>
             </th>
         </tr>
     </thead>
@@ -18,13 +19,19 @@
         @foreach (var line in Model.Lines)
         {
             <tr class="bus-line">
-                <td class="stop">@line.Stop</td>
-                <td class="bus">@line.Line</td>
-                <td class="time" id="ID_@line.Stop@line.Line">
-                    @line.Time
+                <td class="cell-stop">
+                    <span class="stop">@line.Stop</span>
+                </td>
+                <td class="cell-bus">
+                    <span class="bus">@line.Line</span>
+                </td>
+                <td class="cell-time" id="TD_@line.Stop@line.Line">
+                    <span class="time" id="ID_@line.Stop@line.Line">@line.Time</span>
                 </td>
                 <td class="desc">
-                    <marquee behavior="scroll" direction="left">@line.Desc</marquee>
+                    <marquee behavior="scroll" direction="left">
+                    @line.Desc
+                    </marquee>
                 </td>
             </tr>
         }
@@ -39,9 +46,11 @@
 
         var RetrieveTime = function () {
 
+            var computed_url = "/api/arrival/cat/@Model.Category/token/@Model.EMTToken/" + new Date().getTime();
+
             jQuery.ajax({
 
-                url    : "/api/arrival/cat/@Model.Category/token/@Model.EMTToken",
+                url    : computed_url,
                 type   : "GET",
                 success: doSuccess,
                 error  : doError
@@ -52,17 +61,37 @@
         var doSuccess = function (data) {
 
             //console.log( "OK" );
-            //console.log( data );
+            console.log(data);
+
+            $("#refresh-temp").text( " " + data.temp );
+
+            // refresh hour
+            var now = new Date();
+            $("#refresh-hour").text( now.getHours() + ":" + now.getMinutes() );
 
             $.each(data.lines, function (idx, item) {
 
                 var id = "#ID_" + item.stop + "" + item.line;
-                $( id ).text( item.time );
+
+                $(id).animate({
+
+                    opacity: '0.2',
+
+                }, 50, "linear", function () {
+
+                    $(this).text( item.time );
+
+                    $(this).animate({
+                        opacity: '1',
+                    }, 500, "linear");
+                });
+
+                //$( id ).text( item.time );
 
 
             });
 
-            $("#temp").text( data.temp );
+            
 
 
         };
@@ -75,7 +104,7 @@
 
         $(function () {
 
-            setInterval ( RetrieveTime, 20 * 1000 ); // 10 segundos
+            setInterval ( RetrieveTime, 10 * 1000 ); // 10 segundos
 
         });
 

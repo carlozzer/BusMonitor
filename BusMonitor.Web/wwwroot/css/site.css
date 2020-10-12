@@ -35,20 +35,48 @@ body {
     }
 }
 
+
+
 @font-face {
-    font-family: 'LedDotMatrix';
-    src:url('/fonts/5by7.regular.ttf') format('truetype') /* Safari, Android, iOS */
+    font-family: 'dot_matrixregular';
+    src: url('/fonts/dotmatri-webfont.eot');
+    src: url('/fonts/dotmatri-webfont.eot?#iefix') format('embedded-opentype'), url('%assetPath%/fonts/dotmatri-webfont.woff2') format('woff2'), url('%assetPath%/fonts/dotmatri-webfont.woff') format('woff'), url('%assetPath%/fonts/dotmatri-webfont.ttf') format('truetype'), url('%assetPath%/fonts/dotmatri-webfont.svg#dot_matrixregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.time-table {
+    width:100%;
+    max-width:100%;
+}
+
+.time-table tr td {
+    padding:2px;
+    margin:2px;
 }
 
 .head-line {
-    background-color:#fafafa;
-    font-size:48pt;
+    font-family: "dot_matrixregular";
+    background-color: #000;
+    color: #ff6a00;
+    font-size: 48pt;
+    line-height: 1;
+    font-weight:200;
 }
 
 .bus-line {
     background-color: #000;
-    font-family:LedDotMatrix;
+    font-family: "dot_matrixregular";
     font-size: 48pt;
+    line-height:1;
+}
+
+.cell-stop {
+    padding-right:10px;
+}
+
+.cell-bus {
+    padding-right:10px;
 }
 
 .stop {
