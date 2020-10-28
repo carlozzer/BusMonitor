@@ -29,11 +29,12 @@ namespace BusMonitor.UT
         public void ReadBusLine()
         {
             // ARRAnge
-            TimeTable model = TablesBLL.ModelWithToken( "navas" );
+            string root_url = "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv";
+            TimeTable model = TablesBLL.ModelWithToken( "navas" , root_url );
             
 
             // Act
-            model = TablesBLL.ArrivalTimes( "navas" , model.EMTToken );//emt.TimeArrivalBus()
+            model = TablesBLL.ArrivalTimes( "navas" , model.EMTToken , root_url );//emt.TimeArrivalBus()
 
             // assert
             Assert.IsTrue(false);
@@ -79,7 +80,7 @@ namespace BusMonitor.UT
 
             // Arrange
             string    navas = "navas";
-            TimeTable tt    = TablesBLL.ModelWithToken( navas );
+            TimeTable tt    = TablesBLL.ModelWithToken( navas , "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv");
             EMTClient emt   = new EMTClient(); // buses
 
             // act

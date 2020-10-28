@@ -22,7 +22,8 @@ namespace BusMonitor.Web.Controllers
             Console.Out.WriteLine( $"START TimeArrivalBus ( {category} , {token} , {time} )");
             Console.Out.WriteLine("=====================");
 
-            TimeTable model = TablesBLL.ArrivalTimes( category , token );
+            string root_url = $"{this.HttpContext.Request.Scheme}://{this.HttpContext.Request.Host.Value}";
+            TimeTable model = TablesBLL.ArrivalTimes( category , token , root_url );
 
             Console.Out.WriteLine("=====================");
             Console.Out.WriteLine("TimeArrivalBus");

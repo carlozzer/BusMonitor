@@ -1,4 +1,4 @@
-﻿using BusMonitor.BLL.EMT;
+﻿using BusMonitor.BLL.Clients;
 using BusMonitor.Display;
 using System;
 
@@ -25,10 +25,10 @@ namespace BusMonitor
                     Console.Clear();
                     Console.WriteLine("Press ESC to stop");
 
-                    int seconds = cli.TimeArrivalBus("2705", "C2", token);
-                    string line = $"2705 C2 {(seconds / 60).ToString("00")}:{(seconds%60).ToString("00")}";
+                    //int seconds = cli.TimeArrivalBus("2705", new string[] { "C2" }, token);
+                    //string line = $"2705 C2 {(seconds / 60).ToString("00")}:{(seconds%60).ToString("00")}";
 
-                    display.DrawText( 1 , 1 , 1 , line );
+                    //display.DrawText( 1 , 1 , 1 , line );
 
                     System.Threading.Thread.Sleep(10000);
                 }

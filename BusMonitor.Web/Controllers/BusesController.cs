@@ -12,8 +12,10 @@ namespace BusMonitor.Web.Controllers
     {
         public IActionResult Index( string cat )
         {
-            TimeTable model = TablesBLL.ModelWithToken( cat );
-            model = TablesBLL.ArrivalTimes( cat , model.EMTToken );
+            string root_url = $"{this.HttpContext.Request.Scheme}://{this.HttpContext.Request.Host.Value}";
+
+            TimeTable model = TablesBLL.ModelWithToken( cat , root_url );
+            model = TablesBLL.ArrivalTimes( cat , model.EMTToken , root_url );
             return View( model );
         }
     }

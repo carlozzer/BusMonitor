@@ -13,9 +13,9 @@ namespace BusMonitor.BLL.Tables
     {
         #region ARRIVAL TIME
 
-        public static TimeTable ArrivalTimes( string category , string token ) {
+        public static TimeTable ArrivalTimes( string category , string token , string root_url ) {
 
-            TimeTable model = ReadCSV( category );
+            TimeTable model = ReadCSV( category , root_url );
             model.EMTToken = token;
             model.Category = category;
 
@@ -40,7 +40,7 @@ namespace BusMonitor.BLL.Tables
 
         #region READ TABLE
 
-        public static TimeTable ReadCSV( string cat ) {
+        public static TimeTable ReadCSV( string cat , string root_url ) {
 
             TimeTable ret = new TimeTable();
 
@@ -48,8 +48,8 @@ namespace BusMonitor.BLL.Tables
 
             WebClient client = new WebClient();
 
-            //string url = $"{this.Request.Scheme}://{this.Request.Host.Value}/csv/buses.csv";
-            string url = "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv";
+            string url = $"{root_url}/csv/buses.csv";
+            //string url = "http://busmon.westeurope.cloudapp.azure.com/csv/buses.csv";
 
             Stream stream = client.OpenRead( url );
             StreamReader reader = new StreamReader(stream);
@@ -86,9 +86,9 @@ namespace BusMonitor.BLL.Tables
 
         }
 
-        public static TimeTable ModelWithToken ( string cat ) {
+        public static TimeTable ModelWithToken ( string cat , string root_url ) {
 
-            TimeTable model = ReadCSV( cat );
+            TimeTable model = ReadCSV( cat , root_url );
             
             EMTClient cli = new EMTClient();
             model.EMTToken = cli.Login("carlozzer@gmail.com", "carlo33er@GMAIL.COM");
