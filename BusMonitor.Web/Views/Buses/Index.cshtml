@@ -10,7 +10,8 @@
             <th scope="col">time</th>
             <th scope="col" class="text-right">
                 <span id="refresh-hour">@DateTime.Now.ToString("HH:mm")</span>
-                <span id="refresh-temp">@Model.Temp</span><span>C </span>
+                <span id="refresh-temp">@Model.Temp C</span>
+                <span id="refresh-status">--</span>
             </th>
         </tr>
     </thead>
@@ -26,7 +27,7 @@
                     <span class="bus">@line.Line</span>
                 </td>
                 <td class="cell-time" id="TD_@line.Stop@line.Line">
-                    <span class="time" id="ID_@line.Stop@line.Line">@line.Time</span>
+                    <span class="time stop-line" id="ID_@line.Stop@line.Line">@line.Time</span>
                 </td>
                 <td class="desc">
                     <marquee behavior="scroll" direction="left">
@@ -60,46 +61,69 @@
 
         var doSuccess = function (data) {
 
-            //console.log( "OK" );
-            console.log(data);
+            //console.log(data);
 
-            $("#refresh-temp").text( " " + data.temp );
+            $("#refresh-status").css("color", "green");
+            Refresh( "#refresh-status" , "ON"  );
+
+            Refresh( "#refresh-temp" , "" + data.temp + "C"  );
 
             // refresh hour
-            var now = new Date();
-            $("#refresh-hour").text( now.getHours() + ":" + now.getMinutes() );
-
+            var hour = currentHour();
+            Refresh( "#refresh-hour" , hour );
+            
             $.each(data.lines, function (idx, item) {
 
                 var id = "#ID_" + item.stop + "" + item.line;
-
-                $(id).animate({
-
-                    opacity: '0.2',
-
-                }, 50, "linear", function () {
-
-                    $(this).text( item.time );
-
-                    $(this).animate({
-                        opacity: '1',
-                    }, 500, "linear");
-                });
-
-                //$( id ).text( item.time );
-
+                Refresh( id , item.time );
 
             });
 
-            
-
-
         };
 
-        var doError = function ( data ) {
+        var doError = function (data) {
+
+            $("#refresh-status").css("color","red");
+            Refresh("#refresh-status", "OFF");
+
+            Refresh( "#refresh-temp" , "--C"  );
+
+            var hour = currentHour();
+            Refresh( "#refresh-hour" , hour );
+            
+            $(".stop-line").each(function () {
+                Refresh( id , "--:--" );
+            });
 
             console.log('ERROR');
         };
+
+        var currentHour = function() {
+
+            var now = new Date();
+            var left = ("00" + now.getHours()).slice(-2);
+            var right = ("00" + now.getMinutes()).slice(-2);
+            var hour = "" + left + ":" + right;
+            
+        }
+
+        var Refresh = function ( id , val ) {
+
+            $(id).animate({
+
+                opacity: '0.2',
+
+            }, 50, "linear", function () {
+
+                $(this).text( val );
+
+                $(this).animate({
+
+                    opacity: '1',
+
+                }, 500, "linear");
+            });
+        }
 
 
         $(function () {
